@@ -1,0 +1,46 @@
+.btn-pull {
+    margin-left:5px;
+}
+
+.col-btn {
+    padding-top:23px;
+}
+
+.harrow-container {
+    padding-top: 5rem;
+}
+
+.fixedSizeImageContainer {
+    width:500px;
+    height:500px;
+    float: left;
+}
+
+.harrowSingleImg {
+    height: 450px;
+    float: right
+}
+.harrowSpreadImg {
+    display: block; 
+    margin: auto;
+}
+
+div.click-to-top span {
+  display: none;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #333;
+  color: #fff;
+}
+
+div.click-to-top:hover span {
+  display: block;
+}
+
+@media (max-width: 1300px) {
+    .col-6 {
+        width: 100% !important;
+    }
+}
