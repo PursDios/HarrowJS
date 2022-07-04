@@ -4,15 +4,18 @@ $(function() {
     });
 
     function getPull() {
-        var type = $("select.Pull:first").val();
+        var type = $("select.pull:first").val();
+        var category = $("select.category:first").val();
         var result = null;
+
+        console.log(category);
     
         switch(type) {
             case 'single':
-                result = getRandomCount(1);
+                result = getRandomCount(1, category);
                 break;
             case 'full':
-                result = getRandomCount(9);
+                result = getRandomCount(9, category);
                 break;
         }
     
@@ -21,10 +24,36 @@ $(function() {
         }
     }
     
-    function getRandomCount(desired) {
+    function getRandomCount(num, category) {
         items = new Array();
-        cards = getCards();
-        while(items.length < desired)
+        let cards = null;
+
+        switch(category)
+        {
+            case 'all':
+                cards = getAllCards();
+                break;
+            case 'str':
+                cards = getStrCards();
+                break;
+            case 'dex':
+                cards = getDexCards();
+                break;
+            case 'con':
+                cards = getConCards();
+                break;
+            case 'int':
+                cards = getIntCards();
+                break;
+            case 'wis':
+                cards = getWisCards();
+                break;
+            case 'cha':
+                cards = getChaCards();
+                break;
+        }
+
+        while(items.length < num)
         {
             items.push(cards.splice(Math.floor(Math.random() * cards.length), 1));
         }
@@ -111,9 +140,21 @@ $(function() {
         }
         
     }
-    
-    function getCards() {
-       return Array (
+
+    function getAllCards() {
+        let cards = getStrCards();
+        cards = cards.concat(getDexCards());
+        cards = cards.concat(getConCards());
+        cards = cards.concat(getIntCards());
+        cards = cards.concat(getWisCards());
+        cards = cards.concat(getChaCards());
+
+        return cards;
+    }
+
+    function getStrCards()
+    {
+        return Array (
             /* Strength */
     
             {'name': 'The Paladin', 'alignment': 'LG', 'description':'The Paladin is the lawful good card of strength. It represents standing resolutely against trouble, without backing down'},
@@ -122,18 +163,23 @@ $(function() {
     
             {'name': 'The Big Sky', 'alignment': 'CG', 'description':'This is the chaotic good card of strength. It represents momentous change, as when all the slaves of a nation are emancipated'},
     
-            {'name': 'The Forge', 'description':'This is the lawful neutral card of strength. It represents strength through diversity, or strength from many sources united against a single trial'},
+            {'name': 'The Forge', 'alignment': 'LN', 'description':'This is the lawful neutral card of strength. It represents strength through diversity, or strength from many sources united against a single trial'},
     
             {'name': 'The Bear', 'alignment': 'NN', 'description':'This is the neutral card of strength. It represents pure strength that cannot be truly tamed or trained'},
     
             {'name': 'The Uprising', 'alignment': 'CN', 'description':'This is the chaotic neutral card of strength. It represents overwhelming strength that catches the subject up in something much more powerful'},
     
-            {'name': 'The Fiend', 'description':'This is the lawful evil card of strength. It is a devil that devours the masses of the innocent, and can represent the deaths of many in a disaster'},
+            {'name': 'The Fiend', 'alignment': 'LE', 'description':'This is the lawful evil card of strength. It is a devil that devours the masses of the innocent, and can represent the deaths of many in a disaster'},
     
             {'name': 'The Beating', 'alignment': 'NE', 'description':'This is the neutral evil card of strength. It represents an assault from all quarters, or the mental dissolution of the self'},
     
             {'name': 'The Cyclone', 'alignment': 'CE', 'description':'This is the chaotic evil card of strength. It represents an unstoppable, destructive force unleashed through the plots of intelligent creatures'},
-    
+        );
+    }
+
+    function getDexCards()
+    {
+        return Array (
             /*Dexterity*/
     
             {'name': 'The Dance', 'alignment': 'LG', 'description':'The Dance is the lawful good card of dexterity. It represents a complicated framework that requires the cooperation of all to avoid collapse'},
@@ -153,27 +199,37 @@ $(function() {
             {'name': 'The Crows', 'alignment': 'NE', 'description':'This is the neutral evil card of dexterity. It represents murder, theft, and the violent loss of that which is loved'},
     
             {'name': "The Demon's Lantern", 'alignment': 'CE', 'description':'This is the chaotic evil card of dexterity. It represents an impossible situation of traps, mind tricks, and sleight of hand'},
-            
-            /*Constitution */
+        );
+    }
     
-            {'name': 'The Trumpet', 'alignment': 'LG', 'description': 'This is the lawful good card of constitution. It represents an archon who dives aggressively and righteously into danger'},
+    function getConCards()
+    {
+        return Array (
+           /*Constitution */
     
-            {'name': 'The Survivor', 'alignment': 'NG', 'description': 'This is the neutral good card of constitution. It represents a creature that has managed to survive a terrible ordeal, when everyone thought him lost'},
+           {'name': 'The Trumpet', 'alignment': 'LG', 'description': 'This is the lawful good card of constitution. It represents an archon who dives aggressively and righteously into danger'},
     
-            {'name': 'The Desert', 'alignment': 'CG', 'description': 'This is the chaotic good card of constitution. It represents an environment too difficult for anyone to survive without help. The sphinx may represent a source of salvation from plague'},
-    
-            {'name': 'The Brass Dwarf', 'alignment': 'LN', 'description': 'This is the lawful neutral card of constitution, showing an azer. It represents a creature invulnerable to a current threat'},
-    
-            {'name': 'The Teamster', 'alignment': 'NN', 'description': 'This is the neutral card of constitution. It represents a external force that drives the subject on'},
-    
-            {'name': 'The Mountain Man', 'alignment': 'CN', 'description': "This is the chaotic neutral card of constitution. This giant represents an encounter with a physical power outside of the subject's control"},
-    
-            {'name': 'The Tangled Briar', 'alignment': 'LE', 'description': 'This is the lawful evil card of constitution. It represents a historical thing or creature that will have some influence on the question'},
-    
-            {'name': 'The Sickness', 'alignment': 'NE', 'description': 'This is the neutral evil card of constitution. It represents corruption, famine, plague, pestilence, and disease'},
-    
-            {'name': 'The Waxworks', 'alignment': 'CE', 'description': 'This is the chaotic evil card of constitution. It represents a place of torture, imprisonment, helplessness, and paralysis'},
-    
+           {'name': 'The Survivor', 'alignment': 'NG', 'description': 'This is the neutral good card of constitution. It represents a creature that has managed to survive a terrible ordeal, when everyone thought him lost'},
+   
+           {'name': 'The Desert', 'alignment': 'CG', 'description': 'This is the chaotic good card of constitution. It represents an environment too difficult for anyone to survive without help. The sphinx may represent a source of salvation from plague'},
+   
+           {'name': 'The Brass Dwarf', 'alignment': 'LN', 'description': 'This is the lawful neutral card of constitution, showing an azer. It represents a creature invulnerable to a current threat'},
+   
+           {'name': 'The Teamster', 'alignment': 'NN', 'description': 'This is the neutral card of constitution. It represents a external force that drives the subject on'},
+   
+           {'name': 'The Mountain Man', 'alignment': 'CN', 'description': "This is the chaotic neutral card of constitution. This giant represents an encounter with a physical power outside of the subject's control"},
+   
+           {'name': 'The Tangled Briar', 'alignment': 'LE', 'description': 'This is the lawful evil card of constitution. It represents a historical thing or creature that will have some influence on the question'},
+   
+           {'name': 'The Sickness', 'alignment': 'NE', 'description': 'This is the neutral evil card of constitution. It represents corruption, famine, plague, pestilence, and disease'},
+   
+           {'name': 'The Waxworks', 'alignment': 'CE', 'description': 'This is the chaotic evil card of constitution. It represents a place of torture, imprisonment, helplessness, and paralysis'},
+        );
+    }
+
+    function getIntCards()
+    {
+        return Array (
             /*Intelligence*/
     
             {'name': 'The Hidden Truth', 'description': 'This is the lawful good card of intelligence. It represents the discovery of the greater truth within'},
@@ -184,7 +240,7 @@ $(function() {
     
             {'name': 'The Inquisitor', 'alignment': 'LN', 'description': 'This is the lawful neutral card of intelligence. It represents an immutable object that cannot be deceived or influenced'},
     
-            {'name': 'The Foreign Trader', 'description': 'This is the neutral card of intelligence. It represents spies, merchants, and those who truck in information'},
+            {'name': 'The Foreign Trader', 'alignment': 'NN', 'description': 'This is the neutral card of intelligence. It represents spies, merchants, and those who truck in information'},
     
             {'name': 'The Vision', 'alignment': 'CN', 'description': 'This is the chaotic neutral card of intelligence. It represents esoteric and arcane knowledge, or madness'},
     
@@ -193,7 +249,12 @@ $(function() {
             {'name': 'The Idiot', 'alignment': 'NE', 'description': 'This is the neutral evil card of intelligence. It represents folly, greed, blackmail, bribery, or hubris'},
     
             {'name': 'The Snakebite', 'alignment': 'CE', 'description': 'This is the chaotic evil card of intelligence. It represents poison, venom, assassination, and discord'},
+        );
+    }
     
+    function getWisCards()
+    {
+        return Array (
             /*Wisdom*/
         
             {'name': 'The Winged Serpent', 'alignment': 'LG', 'description': 'This is the lawful good card of wisdom. It represents the couatl, the bridge of understanding between the towers of knowledge and judgement'},
@@ -213,10 +274,15 @@ $(function() {
             {'name': 'The Mute Hag', 'alignment': 'NE', 'description': 'This is the neutral evil card of wisdom. It represents the insightful hag, a purveyor of blood pacts, treacherous secrets, and discord'},
     
             {'name': 'The Lost', 'alignment': 'CE', 'description': 'This is the chaotic evil card of wisdom. The bodak represents the permanently insane, lost among lunatics and psychopaths in insane asylums. It is a card of emptiness'},
+        );
+    }
     
+    function getChaCards()
+    {
+        return Array (
             /*Charisma*/
     
-            {'name': 'The Empty Throne', 'description': 'This is the lawful good card of charisma. It represents those who are gone, or a ghost of the past that has taught important lessons'},
+            {'name': 'The Empty Throne', 'alignment': 'LG', 'description': 'This is the lawful good card of charisma. It represents those who are gone, or a ghost of the past that has taught important lessons'},
     
             {'name': 'The Theater', 'alignment': 'NG', 'description': 'This is the neutral good card of charisma. It represents prophecy, with a true prophet acting a part as the puppet of the gods'},
     
@@ -233,12 +299,7 @@ $(function() {
             {'name': 'The Betrayal', 'alignment': 'NE', 'description': 'This is the neutral evil card of charisma. It represents selfishness and envy'},
     
             {'name': 'The Liar', 'alignment': 'CE', 'description': 'This is the chaotic evil card of charisma. It represents destructive, treacherous love. The lamia signals obsession, star-crossed lovers, or unrequited desire'},
-       );
-    }
-
-    function getStrCards()
-    {
-        //TODO
+        );
     }
 });
 
