@@ -235,5 +235,10 @@ $(function() {
             {'name': 'The Liar', 'alignment': 'CE', 'description': 'This is the chaotic evil card of charisma. It represents destructive, treacherous love. The lamia signals obsession, star-crossed lovers, or unrequited desire'},
        );
     }
+
+    function getStrCards()
+    {
+        //TODO
+    }
 });
 
