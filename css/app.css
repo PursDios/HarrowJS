@@ -25,6 +25,18 @@
     margin: auto;
 }
 
+.perfect {
+    background-color: blue;
+}
+
+.onestep {
+    background-color: green;
+}
+
+.opposite {
+    background-color: red;
+}
+
 div.click-to-top span {
   display: none;
   position: absolute;

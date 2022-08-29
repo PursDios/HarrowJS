@@ -7,8 +7,6 @@ $(function() {
         var type = $("select.pull:first").val();
         var category = $("select.category:first").val();
         var result = null;
-
-        console.log(category);
     
         switch(type) {
             case 'single':
@@ -96,7 +94,7 @@ $(function() {
 
         for (var i=0; i <= 2; i++) {
             appendData += `<td class="w-25">`;
-            appendData += `<img src="img/Harrow/Harrow_${cards[i].name}.jpg" class="img-fluid img-thumbnail harrowSpreadImg" alt="Harrow Card">
+            appendData += `<img src="img/Harrow/Harrow_${cards[i].name}.jpg" class="img-fluid img-thumbnail harrowSpreadImg ${getBackgroundColor(i, cards[i].alignment)}" alt="Harrow Card">
                                             <p class="text-center" style="color: darkred;">${cards[i].name}</p>
                                             <p class="text-center">${cards[i].description}</p>`
             appendData += `</td>`;
@@ -106,7 +104,7 @@ $(function() {
 
         for (var i=3; i <= 5; i++) {
             appendData += `<td class="w-25">`;
-            appendData += `<img src="img/Harrow/Harrow_${cards[i].name}.jpg" class="img-fluid img-thumbnail harrowSpreadImg" alt="Harrow Card">
+            appendData += `<img src="img/Harrow/Harrow_${cards[i].name}.jpg" class="img-fluid img-thumbnail harrowSpreadImg ${getBackgroundColor(i, cards[i].alignment)}" alt="Harrow Card">
                                             <p class="text-center" style="color: darkred;">${cards[i].name}</p>
                                             <p class="text-center">${cards[i].description}</p>`
             appendData += `</td>`;
@@ -116,7 +114,7 @@ $(function() {
 
         for (var i=6; i <= 8; i++) {
             appendData += '<td class="w-25">';
-            appendData += `<img src="img/Harrow/Harrow_${cards[i].name}.jpg" class="img-fluid img-thumbnail harrowSpreadImg" alt="Harrow Card">
+            appendData += `<img src="img/Harrow/Harrow_${cards[i].name}.jpg" class="img-fluid img-thumbnail harrowSpreadImg ${getBackgroundColor(i, cards[i].alignment)}" alt="Harrow Card">
                                             <p class="text-center" style="color: darkred;">${cards[i].name}</p>
                                             <p class="text-center">${cards[i].description}</p>`
             appendData += '</td>';
@@ -150,6 +148,42 @@ $(function() {
         cards = cards.concat(getChaCards());
 
         return cards;
+    }
+
+    function getBackgroundColor(position, alignment)
+    {
+        position++;
+        console.log(alignment);
+        let alignmentSteps = getStepsForAlignment(alignment);
+        if(alignmentSteps.perfect === position) {
+            return "perfect";
+        } else if(alignmentSteps.onestep.includes(position)) {
+            return "onestep";
+        } else if(alignmentSteps.opposite === position) {
+            return "opposite";
+        }
+    }
+
+    function getStepsForAlignment(alignment) {
+        if (alignment === "LG") {
+            return {'perfect': 1, 'onestep': [2,4], 'opposite': '9'};
+        } else if (alignment === "NG") {
+            return {'perfect': 2, 'onestep': [1,3,5], 'opposite': '8'};
+        } else if (alignment === "CG") {
+            return {'perfect': 3, 'onestep': [2,6], 'opposite': '7'};
+        } else if (alignment === "LN") {
+            return {'perfect': 4, 'onestep': [1,5,7], 'opposite': '6'};
+        } else if (alignment === "NN") {
+            return {'perfect': 5, 'onestep': [2,4,6,8], 'opposite': '5'};
+        } else if (alignment === "CN") {
+            return {'perfect': 6, 'onestep': [3,5,9], 'opposite': '4'};
+        } else if (alignment === "LE") {
+            return {'perfect': 7, 'onestep': [4,8], 'opposite': '3'};
+        } else if (alignment === "NE") {
+            return {'perfect': 8, 'onestep': [5,7,9], 'opposite': '2'};
+        } else if (alignment === "CE") {
+            return {'perfect': 9, 'onestep': [6,8], 'opposite': '1'};
+        } 
     }
 
     function getStrCards()
@@ -232,7 +266,7 @@ $(function() {
         return Array (
             /*Intelligence*/
     
-            {'name': 'The Hidden Truth', 'description': 'This is the lawful good card of intelligence. It represents the discovery of the greater truth within'},
+            {'name': 'The Hidden Truth', 'alignment': 'LG', 'description': 'This is the lawful good card of intelligence. It represents the discovery of the greater truth within'},
     
             {'name': 'The Wanderer', 'alignment': 'NG', 'description': 'This is the neutral good card of intelligence. It represents a centaur collector who appreciates things others discard as junk'},
     
