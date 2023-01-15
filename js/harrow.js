@@ -1,6 +1,15 @@
-$(function() {
-    $("button").click(function() {
+$(document).ready(function(){
+    $(".specialbutton").click(function() {
         getPull();
+    });
+    $(".revealpast").click(function() {
+        revealCards(0);
+    });
+    $(".revealPresent").click(function() {
+        revealCards(1);
+    });
+    $(".revealFuture").click(function() {
+        revealCards(2);
     });
 
     function getPull() {
@@ -58,10 +67,25 @@ $(function() {
         return items.flat();
     }
 
+    function revealCards(number) {
+        switch (number) {
+            case 0:
+                console.log(0);
+                break;
+            case 1:
+                console.log(1);
+                break;
+            case 2:
+                console.log(2);
+                break;
+        }
+    }
+
     /**
      Used for the single pull logic
     **/
     function getSingleTemplate(cards) {
+        displayRevealButtons(false);
         var card = cards[0];
         return `
             <div class="col-6" style="margin-left:auto; margin-right:auto;">
@@ -81,6 +105,7 @@ $(function() {
     }
 
     function getFullTemplate(cards) {
+        displayRevealButtons(true);
         var appendData = `
             <div class="col-6" style="margin-left:auto; margin-right:auto;">
                 <table class="table table-image">
@@ -127,6 +152,16 @@ $(function() {
         return appendData;
     }
 
+    function displayRevealButtons(visible) {
+        console.log('display reveal buttons');
+        if(visible) {
+            $('.revealButtons:first').css('display', '');
+            return true;
+        }
+        $('.revealButtons:first').css('display', 'none');
+        return false;
+    }
+
     function displayContent(result) {
         if ($('div.pendingContent:first').children.length > 0) {
             $('div.pendingContent:first').empty();
@@ -156,7 +191,6 @@ $(function() {
     function getBackgroundColor(position, alignment)
     {
         position++;
-        console.log(alignment);
         let alignmentSteps = getStepsForAlignment(alignment);
         if(alignmentSteps.perfect === position) {
             return "perfect";
@@ -339,4 +373,3 @@ $(function() {
         );
     }
 });
-
