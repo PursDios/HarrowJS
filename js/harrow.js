@@ -73,19 +73,20 @@ $(document).ready(function(){
         imgLocation = "img/Harrow/Harrow_";
         switch (number) {
             case 0:
-                $('#harrow0:first').attr('src', imgLocation + cards[0].name + '.jpg')
-                $('#harrow3:first').attr('src', imgLocation + cards[3].name + '.jpg')
-                $('#harrow6:first').attr('src', imgLocation + cards[6].name + '.jpg')
+                $('#harrow0:first').attr('src', imgLocation + cards[0].name + '.jpg').addClass(getBackgroundColor(0, cards[0].alignment));
+                $('#harrow3:first').attr('src', imgLocation + cards[3].name + '.jpg').addClass(getBackgroundColor(3, cards[3].alignment));
+                $('#harrow6:first').attr('src', imgLocation + cards[6].name + '.jpg').addClass(getBackgroundColor(6, cards[6].alignment));
+            
                 break;
             case 1:
-                $('#harrow1:first').attr('src', imgLocation + cards[1].name + '.jpg')
-                $('#harrow4:first').attr('src', imgLocation + cards[4].name + '.jpg')
-                $('#harrow7:first').attr('src', imgLocation + cards[7].name + '.jpg')
+                $('#harrow1:first').attr('src', imgLocation + cards[1].name + '.jpg').addClass(getBackgroundColor(1, cards[1].alignment));
+                $('#harrow4:first').attr('src', imgLocation + cards[4].name + '.jpg').addClass(getBackgroundColor(4, cards[4].alignment));
+                $('#harrow7:first').attr('src', imgLocation + cards[7].name + '.jpg').addClass(getBackgroundColor(7, cards[7].alignment));
                 break;
             case 2:
-                $('#harrow2:first').attr('src', imgLocation + cards[2].name + '.jpg')
-                $('#harrow5:first').attr('src', imgLocation + cards[5].name + '.jpg')
-                $('#harrow8:first').attr('src', imgLocation + cards[8].name + '.jpg')
+                $('#harrow2:first').attr('src', imgLocation + cards[2].name + '.jpg').addClass(getBackgroundColor(2, cards[2].alignment));
+                $('#harrow5:first').attr('src', imgLocation + cards[5].name + '.jpg').addClass(getBackgroundColor(5, cards[5].alignment));
+                $('#harrow8:first').attr('src', imgLocation + cards[8].name + '.jpg').addClass(getBackgroundColor(8, cards[8].alignment));
                 break;
         }
     }
@@ -131,7 +132,7 @@ $(document).ready(function(){
 
         for (var i=0; i <= 2; i++) {
             appendData += `<td class="w-25">`;
-            appendData += `<img id="harrow${[i]}" src="img/Harrow/Harrow_Placeholder.jpg" class="img-fluid img-thumbnail harrowSpreadImg ${getBackgroundColor(i, cards[i].alignment)}" alt="Harrow Card">
+            appendData += `<img id="harrow${[i]}" src="img/Harrow/Harrow_Placeholder.jpg" class="img-fluid img-thumbnail harrowSpreadImg" alt="Harrow Card">
                                             <p class="text-center" style="color: darkred;">${cards[i].name}</p>
                                             <p class="text-center">${cards[i].description}</p>`
             appendData += `</td>`;
@@ -141,7 +142,7 @@ $(document).ready(function(){
 
         for (var i=3; i <= 5; i++) {
             appendData += `<td class="w-25">`;
-            appendData += `<img id="harrow${[i]}" src="img/Harrow/Harrow_Placeholder.jpg" class="img-fluid img-thumbnail harrowSpreadImg ${getBackgroundColor(i, cards[i].alignment)}" alt="Harrow Card">
+            appendData += `<img id="harrow${[i]}" src="img/Harrow/Harrow_Placeholder.jpg" class="img-fluid img-thumbnail harrowSpreadImg" alt="Harrow Card">
                                             <p class="text-center" style="color: darkred;">${cards[i].name}</p>
                                             <p class="text-center">${cards[i].description}</p>`
             appendData += `</td>`;
@@ -151,7 +152,7 @@ $(document).ready(function(){
 
         for (var i=6; i <= 8; i++) {
             appendData += '<td class="w-25">';
-            appendData += `<img id="harrow${[i]}" src="img/Harrow/Harrow_Placeholder.jpg" class="img-fluid img-thumbnail harrowSpreadImg ${getBackgroundColor(i, cards[i].alignment)}" alt="Harrow Card">
+            appendData += `<img id="harrow${[i]}" src="img/Harrow/Harrow_Placeholder.jpg" class="img-fluid img-thumbnail harrowSpreadImg" alt="Harrow Card">
                                             <p class="text-center" style="color: darkred;">${cards[i].name}</p>
                                             <p class="text-center">${cards[i].description}</p>`
             appendData += '</td>';
