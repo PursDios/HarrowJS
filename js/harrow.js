@@ -1,3 +1,5 @@
+cards = [];
+
 $(document).ready(function(){
     $(".specialbutton").click(function() {
         getPull();
@@ -13,27 +15,26 @@ $(document).ready(function(){
     });
 
     function getPull() {
+        cards = [];
         var type = $("select.pull:first").val();
         var category = $("select.category:first").val();
-        var result = null;
 
         switch(type) {
             case 'single':
-                result = getRandomCount(1, category);
+                getRandomCount(1, category);
                 break;
             case 'full':
-                result = getRandomCount(9, category);
+                getRandomCount(9, category);
                 break;
         }
 
-        if (result) {
-            displayContent(result)
+        if (cards) {
+            displayContent(cards)
         }
     }
 
     function getRandomCount(num, category) {
         items = new Array();
-        let cards = null;
 
         switch(category)
         {
@@ -64,19 +65,27 @@ $(document).ready(function(){
         {
             items.push(cards.splice(Math.floor(Math.random() * cards.length), 1));
         }
-        return items.flat();
+        cards = items.flat();
+        return cards;
     }
 
     function revealCards(number) {
+        imgLocation = "img/Harrow/Harrow_";
         switch (number) {
             case 0:
-                console.log(0);
+                $('#harrow0:first').attr('src', imgLocation + cards[0].name + '.jpg')
+                $('#harrow3:first').attr('src', imgLocation + cards[3].name + '.jpg')
+                $('#harrow6:first').attr('src', imgLocation + cards[6].name + '.jpg')
                 break;
             case 1:
-                console.log(1);
+                $('#harrow1:first').attr('src', imgLocation + cards[1].name + '.jpg')
+                $('#harrow4:first').attr('src', imgLocation + cards[4].name + '.jpg')
+                $('#harrow7:first').attr('src', imgLocation + cards[7].name + '.jpg')
                 break;
             case 2:
-                console.log(2);
+                $('#harrow2:first').attr('src', imgLocation + cards[2].name + '.jpg')
+                $('#harrow5:first').attr('src', imgLocation + cards[5].name + '.jpg')
+                $('#harrow8:first').attr('src', imgLocation + cards[8].name + '.jpg')
                 break;
         }
     }
@@ -84,7 +93,7 @@ $(document).ready(function(){
     /**
      Used for the single pull logic
     **/
-    function getSingleTemplate(cards) {
+    function getSingleTemplate() {
         displayRevealButtons(false);
         var card = cards[0];
         return `
@@ -104,7 +113,7 @@ $(document).ready(function(){
         `
     }
 
-    function getFullTemplate(cards) {
+        function getFullTemplate() {
         displayRevealButtons(true);
         var appendData = `
             <div class="col-6" style="margin-left:auto; margin-right:auto;">
@@ -122,7 +131,7 @@ $(document).ready(function(){
 
         for (var i=0; i <= 2; i++) {
             appendData += `<td class="w-25">`;
-            appendData += `<img src="img/Harrow/Harrow_${cards[i].name}.jpg" class="img-fluid img-thumbnail harrowSpreadImg ${getBackgroundColor(i, cards[i].alignment)}" alt="Harrow Card">
+            appendData += `<img id="harrow${[i]}" src="img/Harrow/Harrow_Placeholder.jpg" class="img-fluid img-thumbnail harrowSpreadImg ${getBackgroundColor(i, cards[i].alignment)}" alt="Harrow Card">
                                             <p class="text-center" style="color: darkred;">${cards[i].name}</p>
                                             <p class="text-center">${cards[i].description}</p>`
             appendData += `</td>`;
@@ -132,7 +141,7 @@ $(document).ready(function(){
 
         for (var i=3; i <= 5; i++) {
             appendData += `<td class="w-25">`;
-            appendData += `<img src="img/Harrow/Harrow_${cards[i].name}.jpg" class="img-fluid img-thumbnail harrowSpreadImg ${getBackgroundColor(i, cards[i].alignment)}" alt="Harrow Card">
+            appendData += `<img id="harrow${[i]}" src="img/Harrow/Harrow_Placeholder.jpg" class="img-fluid img-thumbnail harrowSpreadImg ${getBackgroundColor(i, cards[i].alignment)}" alt="Harrow Card">
                                             <p class="text-center" style="color: darkred;">${cards[i].name}</p>
                                             <p class="text-center">${cards[i].description}</p>`
             appendData += `</td>`;
@@ -142,7 +151,7 @@ $(document).ready(function(){
 
         for (var i=6; i <= 8; i++) {
             appendData += '<td class="w-25">';
-            appendData += `<img src="img/Harrow/Harrow_${cards[i].name}.jpg" class="img-fluid img-thumbnail harrowSpreadImg ${getBackgroundColor(i, cards[i].alignment)}" alt="Harrow Card">
+            appendData += `<img id="harrow${[i]}" src="img/Harrow/Harrow_Placeholder.jpg" class="img-fluid img-thumbnail harrowSpreadImg ${getBackgroundColor(i, cards[i].alignment)}" alt="Harrow Card">
                                             <p class="text-center" style="color: darkred;">${cards[i].name}</p>
                                             <p class="text-center">${cards[i].description}</p>`
             appendData += '</td>';
@@ -178,14 +187,14 @@ $(document).ready(function(){
     }
 
     function getAllCards() {
-        let cards = getStrCards();
-        cards = cards.concat(getDexCards());
-        cards = cards.concat(getConCards());
-        cards = cards.concat(getIntCards());
-        cards = cards.concat(getWisCards());
-        cards = cards.concat(getChaCards());
+        let allCards = getStrCards();
+        allCards = allCards.concat(getDexCards());
+        allCards = allCards.concat(getConCards());
+        allCards = allCards.concat(getIntCards());
+        allCards = allCards.concat(getWisCards());
+        allCards = allCards.concat(getChaCards());
 
-        return cards;
+        return allCards;
     }
 
     function getBackgroundColor(position, alignment)
