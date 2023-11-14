@@ -37,6 +37,10 @@
     background-color: red;
 }
 
+.focus {
+    background-color: gold;
+}
+
 div.click-to-top span {
   display: none;
   position: absolute;

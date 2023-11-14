@@ -1,4 +1,5 @@
 cards = [];
+focusCard = [];
 
 $(document).ready(function(){
     $(".specialbutton").click(function() {
@@ -21,10 +22,10 @@ $(document).ready(function(){
 
         switch(type) {
             case 'single':
-                getRandomCount(1, category);
+                cards = getRandomCount(1, category);
                 break;
             case 'full':
-                getRandomCount(9, category);
+                cards = getRandomCount(9, category);
                 break;
         }
 
@@ -35,58 +36,58 @@ $(document).ready(function(){
 
     function getRandomCount(num, category) {
         items = new Array();
+        tempCards = [];
 
         switch(category)
         {
             case 'all':
-                cards = getAllCards();
+                tempCards = getAllCards();
                 break;
             case 'str':
-                cards = getStrCards();
+                tempCards = getStrCards();
                 break;
             case 'dex':
-                cards = getDexCards();
+                tempCards = getDexCards();
                 break;
             case 'con':
-                cards = getConCards();
+                tempCards = getConCards();
                 break;
             case 'int':
-                cards = getIntCards();
+                tempCards = getIntCards();
                 break;
             case 'wis':
-                cards = getWisCards();
+                tempCards = getWisCards();
                 break;
             case 'cha':
-                cards = getChaCards();
+                tempCards = getChaCards();
                 break;
         }
 
         while(items.length < num)
         {
-            items.push(cards.splice(Math.floor(Math.random() * cards.length), 1));
+            items.push(tempCards.splice(Math.floor(Math.random() * tempCards.length), 1));
         }
-        cards = items.flat();
-        return cards;
+        return items.flat();
     }
 
     function revealCards(number) {
         imgLocation = "img/Harrow/Harrow_";
         switch (number) {
             case 0:
-                $('#harrow0:first').attr('src', imgLocation + cards[0].name + '.jpg').addClass(getBackgroundColor(0, cards[0].alignment));
-                $('#harrow3:first').attr('src', imgLocation + cards[3].name + '.jpg').addClass(getBackgroundColor(3, cards[3].alignment));
-                $('#harrow6:first').attr('src', imgLocation + cards[6].name + '.jpg').addClass(getBackgroundColor(6, cards[6].alignment));
+                $('#harrow0:first').attr('src', imgLocation + cards[0].name + '.jpg').addClass(getBackgroundColor(0, cards[0].alignment, cards[0].name));
+                $('#harrow3:first').attr('src', imgLocation + cards[3].name + '.jpg').addClass(getBackgroundColor(3, cards[3].alignment, cards[3].name));
+                $('#harrow6:first').attr('src', imgLocation + cards[6].name + '.jpg').addClass(getBackgroundColor(6, cards[6].alignment, cards[6].name));
             
                 break;
             case 1:
-                $('#harrow1:first').attr('src', imgLocation + cards[1].name + '.jpg').addClass(getBackgroundColor(1, cards[1].alignment));
-                $('#harrow4:first').attr('src', imgLocation + cards[4].name + '.jpg').addClass(getBackgroundColor(4, cards[4].alignment));
-                $('#harrow7:first').attr('src', imgLocation + cards[7].name + '.jpg').addClass(getBackgroundColor(7, cards[7].alignment));
+                $('#harrow1:first').attr('src', imgLocation + cards[1].name + '.jpg').addClass(getBackgroundColor(1, cards[1].alignment, cards[1].name));
+                $('#harrow4:first').attr('src', imgLocation + cards[4].name + '.jpg').addClass(getBackgroundColor(4, cards[4].alignment, cards[4].name));
+                $('#harrow7:first').attr('src', imgLocation + cards[7].name + '.jpg').addClass(getBackgroundColor(7, cards[7].alignment, cards[7].name));
                 break;
             case 2:
-                $('#harrow2:first').attr('src', imgLocation + cards[2].name + '.jpg').addClass(getBackgroundColor(2, cards[2].alignment));
-                $('#harrow5:first').attr('src', imgLocation + cards[5].name + '.jpg').addClass(getBackgroundColor(5, cards[5].alignment));
-                $('#harrow8:first').attr('src', imgLocation + cards[8].name + '.jpg').addClass(getBackgroundColor(8, cards[8].alignment));
+                $('#harrow2:first').attr('src', imgLocation + cards[2].name + '.jpg').addClass(getBackgroundColor(2, cards[2].alignment, cards[2].name));
+                $('#harrow5:first').attr('src', imgLocation + cards[5].name + '.jpg').addClass(getBackgroundColor(5, cards[5].alignment, cards[5].name));
+                $('#harrow8:first').attr('src', imgLocation + cards[8].name + '.jpg').addClass(getBackgroundColor(8, cards[8].alignment, cards[8].name));
                 break;
         }
     }
@@ -95,6 +96,7 @@ $(document).ready(function(){
      Used for the single pull logic
     **/
     function getSingleTemplate() {
+        displayFocusCard(false);
         displayRevealButtons(false);
         var card = cards[0];
         return `
@@ -114,7 +116,8 @@ $(document).ready(function(){
         `
     }
 
-        function getFullTemplate() {
+    function getFullTemplate() {
+        displayFocusCard(true);
         displayRevealButtons(true);
         var appendData = `
             <div class="col-6" style="margin-left:auto; margin-right:auto;">
@@ -163,7 +166,6 @@ $(document).ready(function(){
     }
 
     function displayRevealButtons(visible) {
-        console.log('display reveal buttons');
         if(visible) {
             $('.revealButtons:first').css('display', '');
             return true;
@@ -172,6 +174,18 @@ $(document).ready(function(){
         return false;
     }
 
+    function displayFocusCard(visible) {
+        if(visible) {
+            imgLocation = "img/Harrow/Harrow_";
+            focusCard = getRandomCount(1, 'all')[0];
+            $('.focusCardImage:first').attr('src', imgLocation + focusCard.name + '.jpg')
+            $('.focusCard:first').css('display', '');
+            return true;
+        }
+        $('.focusCard:first').css('display', 'none');
+        return false;
+    }
+    
     function displayContent(result) {
         if ($('div.pendingContent:first').children.length > 0) {
             $('div.pendingContent:first').empty();
@@ -198,11 +212,14 @@ $(document).ready(function(){
         return allCards;
     }
 
-    function getBackgroundColor(position, alignment)
+    function getBackgroundColor(position, alignment, name)
     {
         position++;
         let alignmentSteps = getStepsForAlignment(alignment);
-        if(alignmentSteps.perfect === position) {
+        if (name === focusCard.name) {
+            return "focus";
+        }
+        else if(alignmentSteps.perfect === position) {
             return "perfect";
         } else if(alignmentSteps.onestep.includes(position)) {
             return "onestep";
