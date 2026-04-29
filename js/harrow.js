@@ -8,10 +8,10 @@ $(document).ready(function(){
     $(".revealpast").click(function() {
         revealCards(0);
     });
-    $(".revealPresent").click(function() {
+    $(".revealpresent").click(function() {
         revealCards(1);
     });
-    $(".revealFuture").click(function() {
+    $(".revealfuture").click(function() {
         revealCards(2);
     });
 
@@ -71,25 +71,20 @@ $(document).ready(function(){
     }
 
     function revealCards(number) {
-        imgLocation = "img/Harrow/Harrow_";
+        var indices;
         switch (number) {
-            case 0:
-                $('#harrow0:first').attr('src', imgLocation + cards[0].name + '.jpg').addClass(getBackgroundColor(0, cards[0].alignment, cards[0].name));
-                $('#harrow3:first').attr('src', imgLocation + cards[3].name + '.jpg').addClass(getBackgroundColor(3, cards[3].alignment, cards[3].name));
-                $('#harrow6:first').attr('src', imgLocation + cards[6].name + '.jpg').addClass(getBackgroundColor(6, cards[6].alignment, cards[6].name));
-            
-                break;
-            case 1:
-                $('#harrow1:first').attr('src', imgLocation + cards[1].name + '.jpg').addClass(getBackgroundColor(1, cards[1].alignment, cards[1].name));
-                $('#harrow4:first').attr('src', imgLocation + cards[4].name + '.jpg').addClass(getBackgroundColor(4, cards[4].alignment, cards[4].name));
-                $('#harrow7:first').attr('src', imgLocation + cards[7].name + '.jpg').addClass(getBackgroundColor(7, cards[7].alignment, cards[7].name));
-                break;
-            case 2:
-                $('#harrow2:first').attr('src', imgLocation + cards[2].name + '.jpg').addClass(getBackgroundColor(2, cards[2].alignment, cards[2].name));
-                $('#harrow5:first').attr('src', imgLocation + cards[5].name + '.jpg').addClass(getBackgroundColor(5, cards[5].alignment, cards[5].name));
-                $('#harrow8:first').attr('src', imgLocation + cards[8].name + '.jpg').addClass(getBackgroundColor(8, cards[8].alignment, cards[8].name));
-                break;
+            case 0: indices = [0, 3, 6]; break;
+            case 1: indices = [1, 4, 7]; break;
+            case 2: indices = [2, 5, 8]; break;
+            default: return;
         }
+        var imgLocation = "img/Harrow/Harrow_";
+        indices.forEach(function(i) {
+            var alignmentClass = 'alignment-' + getBackgroundColor(i, cards[i].alignment, cards[i].name);
+            $('#harrow' + i + ':first')
+                .attr('src', imgLocation + cards[i].name + '.jpg')
+                .addClass('revealed ' + alignmentClass);
+        });
     }
 
     /**
@@ -100,103 +95,67 @@ $(document).ready(function(){
         displayRevealButtons(false);
         var card = cards[0];
         return `
-            <div class="col-6" style="margin-left:auto; margin-right:auto;">
-                        <table class="table table-image">
-                            <tbody>
-                                <tr>
-                                    <td class="w-25">
-                                        <img src="img/Harrow/Harrow_${card.name}.jpg" class="img-fluid img-thumbnail harrowSpreadImg" alt="Harrow Card">
-                                        <p class="text-center" style="color: darkred;">${card.name}</p>
-                                        <p class="text-center">${card.description}</p>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-        `
+            <div class="harrow-single harrow-card">
+                <img src="img/Harrow/Harrow_${card.name}.jpg" class="harrow-card-img revealed" alt="${card.name}">
+                <p class="harrow-card-name">${card.name}</p>
+                <p class="harrow-card-desc">${card.description}</p>
+            </div>
+        `;
     }
 
     function getFullTemplate() {
         displayFocusCard(true);
         displayRevealButtons(true);
-        var appendData = `
-            <div class="col-6" style="margin-left:auto; margin-right:auto;">
-                <table class="table table-image">
-                    <thead>
-                        <tr>
-                            <th scope="col" style="text-align:center;">Past</th>
-                            <th scope="col" style="text-align:center;">Present</th>
-                            <th scope="col" style="text-align:center;">Future</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-        `
 
-        for (var i=0; i <= 2; i++) {
-            appendData += `<td class="w-25">`;
-            appendData += `<img id="harrow${[i]}" src="img/Harrow/Harrow_Placeholder.jpg" class="img-fluid img-thumbnail harrowSpreadImg" alt="Harrow Card">
-                                            <p class="text-center" style="color: darkred;">${cards[i].name}</p>
-                                            <p class="text-center">${cards[i].description}</p>`
-            appendData += `</td>`;
+        var html = `
+            <div class="harrow-spread">
+                <div class="harrow-spread-header">
+                    <span>Past</span><span>Present</span><span>Future</span>
+                </div>
+        `;
+
+        for (var i = 0; i < 9; i++) {
+            html += `
+                <div class="harrow-card">
+                    <img id="harrow${i}" src="img/Harrow/Harrow_Placeholder.jpg" class="harrow-card-img" alt="Harrow Card">
+                    <p class="harrow-card-name">${cards[i].name}</p>
+                    <p class="harrow-card-desc">${cards[i].description}</p>
+                </div>
+            `;
         }
-        appendData += `</tr>`;
-        appendData += `<tr>`;
 
-        for (var i=3; i <= 5; i++) {
-            appendData += `<td class="w-25">`;
-            appendData += `<img id="harrow${[i]}" src="img/Harrow/Harrow_Placeholder.jpg" class="img-fluid img-thumbnail harrowSpreadImg" alt="Harrow Card">
-                                            <p class="text-center" style="color: darkred;">${cards[i].name}</p>
-                                            <p class="text-center">${cards[i].description}</p>`
-            appendData += `</td>`;
-        }
-        appendData += `</tr>`;
-        appendData += `<tr>`;
-
-        for (var i=6; i <= 8; i++) {
-            appendData += '<td class="w-25">';
-            appendData += `<img id="harrow${[i]}" src="img/Harrow/Harrow_Placeholder.jpg" class="img-fluid img-thumbnail harrowSpreadImg" alt="Harrow Card">
-                                            <p class="text-center" style="color: darkred;">${cards[i].name}</p>
-                                            <p class="text-center">${cards[i].description}</p>`
-            appendData += '</td>';
-        }
-        appendData += '</tr>';
-
-        return appendData;
+        html += `</div>`;
+        return html;
     }
 
     function displayRevealButtons(visible) {
-        if(visible) {
-            $('.revealButtons:first').css('display', '');
-            return true;
-        }
-        $('.revealButtons:first').css('display', 'none');
-        return false;
+        $('.revealButtons:first').prop('hidden', !visible);
+        return visible;
     }
 
     function displayFocusCard(visible) {
-        if(visible) {
-            imgLocation = "img/Harrow/Harrow_";
+        if (visible) {
+            var imgLocation = "img/Harrow/Harrow_";
             focusCard = getRandomCount(1, 'all')[0];
-            $('.focusCardImage:first').attr('src', imgLocation + focusCard.name + '.jpg')
-            $('.focusCard:first').css('display', '');
+            $('.focusCardImage:first').attr('src', imgLocation + focusCard.name + '.jpg');
+            $('.focusCard:first').prop('hidden', false);
             return true;
         }
-        $('.focusCard:first').css('display', 'none');
+        $('.focusCard:first').prop('hidden', true);
         return false;
     }
     
     function displayContent(result) {
-        if ($('div.pendingContent:first').children.length > 0) {
-            $('div.pendingContent:first').empty();
+        if ($('.pendingContent:first').children.length > 0) {
+            $('.pendingContent:first').empty();
         }
 
         if (result.length === 1) {
-            $('div.pendingContent:first').append(getSingleTemplate(result));
+            $('.pendingContent:first').append(getSingleTemplate(result));
         }
 
         if (result.length === 9) {
-            $('div.pendingContent:first').append(getFullTemplate(result));
+            $('.pendingContent:first').append(getFullTemplate(result));
         }
 
     }
@@ -230,23 +189,23 @@ $(document).ready(function(){
 
     function getStepsForAlignment(alignment) {
         if (alignment === "LG") {
-            return {'perfect': 1, 'onestep': [2,4], 'opposite': '9'};
+            return {'perfect': 1, 'onestep': [2,4], 'opposite': 9};
         } else if (alignment === "NG") {
-            return {'perfect': 2, 'onestep': [1,3,5], 'opposite': '8'};
+            return {'perfect': 2, 'onestep': [1,3,5], 'opposite': 8};
         } else if (alignment === "CG") {
-            return {'perfect': 3, 'onestep': [2,6], 'opposite': '7'};
+            return {'perfect': 3, 'onestep': [2,6], 'opposite': 7};
         } else if (alignment === "LN") {
-            return {'perfect': 4, 'onestep': [1,5,7], 'opposite': '6'};
+            return {'perfect': 4, 'onestep': [1,5,7], 'opposite': 6};
         } else if (alignment === "NN") {
-            return {'perfect': 5, 'onestep': [2,4,6,8], 'opposite': '5'};
+            return {'perfect': 5, 'onestep': [2,4,6,8], 'opposite': 5};
         } else if (alignment === "CN") {
-            return {'perfect': 6, 'onestep': [3,5,9], 'opposite': '4'};
+            return {'perfect': 6, 'onestep': [3,5,9], 'opposite': 4};
         } else if (alignment === "LE") {
-            return {'perfect': 7, 'onestep': [4,8], 'opposite': '3'};
+            return {'perfect': 7, 'onestep': [4,8], 'opposite': 3};
         } else if (alignment === "NE") {
-            return {'perfect': 8, 'onestep': [5,7,9], 'opposite': '2'};
+            return {'perfect': 8, 'onestep': [5,7,9], 'opposite': 2};
         } else if (alignment === "CE") {
-            return {'perfect': 9, 'onestep': [6,8], 'opposite': '1'};
+            return {'perfect': 9, 'onestep': [6,8], 'opposite': 1};
         }
     }
 
