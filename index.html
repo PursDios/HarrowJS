@@ -6,31 +6,56 @@
         <title>Harrowing</title>
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=EB+Garamond:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Azeret+Mono:wght@400;500;600&family=Cinzel:wght@500;600;700&family=EB+Garamond:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="css/app.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script src="js/harrow.js"></script>
     </head>
     <body>
-        <div class="embers" aria-hidden="true">
-            <span></span><span></span><span></span><span></span>
-            <span></span><span></span><span></span><span></span>
-            <span></span><span></span><span></span><span></span>
+        <!--
+        THESIS: Harrowing is a celestial instrument that measures a reading, never a generic tarot page.
+        OWN-WORLD: Ink-black observatory glass, brass orbital geometry, and exact violet, green, red, and gold condition spectra.
+        STORY: A reader configures a pull, draws fate, then reveals its temporal arrangement without losing context.
+        FIRST VIEWPORT: A large orbital dial surrounds the primary pull controls; the chosen reading emerges directly beneath it.
+        FORM: The Fate Orrery, candidate 6 of 7; seed 5a283b7a.
+        FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
+        -->
+        <div class="astral-field" aria-hidden="true">
+            <span class="astral-star star-a"></span><span class="astral-star star-b"></span>
+            <span class="astral-star star-c"></span><span class="astral-star star-d"></span>
+            <span class="astral-star star-e"></span><span class="astral-star star-f"></span>
+            <span class="astral-star star-g"></span><span class="astral-star star-h"></span>
+            <span class="astral-star star-i"></span><span class="astral-star star-j"></span>
+            <svg class="astral-traces" viewBox="0 0 1440 900" preserveAspectRatio="none" focusable="false">
+                <path d="M-64 226C185 102 338 376 580 266S961 52 1504 276" />
+                <path d="M-48 694c205-137 365 54 588-78s440-72 944 82" />
+                <circle cx="1160" cy="176" r="94" /><circle cx="1160" cy="176" r="172" />
+            </svg>
         </div>
         <main class="grimoire">
-            <h1 class="grimoire-title">Harrowing</h1>
-            <p class="grimoire-subtitle">A divination of fate &amp; fortune</p>
+            <header class="oracle-header">
+                <div class="oracle-sigil" aria-hidden="true">
+                    <span class="sigil-core"></span><span class="sigil-orbit orbit-one"></span>
+                    <span class="sigil-orbit orbit-two"></span><span class="sigil-marker marker-one"></span>
+                    <span class="sigil-marker marker-two"></span>
+                </div>
+                <div class="oracle-title-block">
+                    <h1 class="grimoire-title">Harrowing</h1>
+                    <p class="grimoire-subtitle">A divination of fate &amp; fortune</p>
+                </div>
+                <p class="oracle-deck-status"><span aria-hidden="true"></span>54 cards in orbit</p>
+            </header>
 
-            <section class="harrow-controls">
+            <section class="harrow-controls" aria-label="Reading controls">
                 <label class="harrow-field">
-                    <span class="harrow-field-label">Type</span>
+                    <span class="harrow-field-label">Reading type</span>
                     <select class="pull harrow-select" name="Pull" id="Pull">
                         <option value="single">Single</option>
                         <option value="full">Full</option>
                     </select>
                 </label>
                 <label class="harrow-field">
-                    <span class="harrow-field-label">Category</span>
+                    <span class="harrow-field-label">Suit</span>
                     <select class="category harrow-select" name="Category" id="Category">
                         <option value="all">All</option>
                         <option value="str">Str</option>
@@ -45,6 +70,13 @@
                     <span class="harrow-pull-btn-label">Pull</span>
                 </button>
             </section>
+
+            <aside class="alignment-legend" aria-label="Reading relation key">
+                <span class="alignment-key alignment-key-perfect"><i></i>Perfect</span>
+                <span class="alignment-key alignment-key-onestep"><i></i>One step</span>
+                <span class="alignment-key alignment-key-opposite"><i></i>Opposed</span>
+                <span class="alignment-key alignment-key-focus"><i></i>Focus match</span>
+            </aside>
 
             <section class="focusCard harrow-focus" hidden>
                 <p class="harrow-focus-label">Focus Card</p>
