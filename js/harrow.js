@@ -84,6 +84,8 @@ $(document).ready(function(){
             $('#harrow' + i + ':first')
                 .attr('src', imgLocation + cards[i].name + '.jpg')
                 .addClass('revealed ' + alignmentClass);
+            $('#harrow' + i + '-name' + ':first').removeClass('harrow-text-hidden');
+            $('#harrow' + i + '-desc' + ':first').removeClass('harrow-text-hidden');
         });
     }
 
@@ -118,8 +120,8 @@ $(document).ready(function(){
             html += `
                 <div class="harrow-card">
                     <img id="harrow${i}" src="img/Harrow/Harrow_Placeholder.jpg" class="harrow-card-img" alt="Harrow Card">
-                    <p class="harrow-card-name">${cards[i].name}</p>
-                    <p class="harrow-card-desc">${cards[i].description}</p>
+                    <p id="harrow${i}-name" class="harrow-card-name harrow-text-hidden">${cards[i].name}</p>
+                    <p id="harrow${i}-desc" class="harrow-card-desc harrow-text-hidden">${cards[i].description}</p>
                 </div>
             `;
         }

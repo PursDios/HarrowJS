@@ -473,6 +473,10 @@ body::after {
     line-height: 1;
 }
 
+.harrow-text-hidden {
+    visibility: hidden;
+}
+
 /* ----- Alignment auras ----- */
 .harrow-card-img.alignment-perfect {
     border-color: var(--violet-bright);
